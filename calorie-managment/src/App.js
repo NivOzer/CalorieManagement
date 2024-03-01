@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import { React } from "react";
+import { TextField } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <TextField id="filled-basic" label="Item" variant="filled" />
+      <TextField
+        id="filled-basic"
+        label="Number of Calories"
+        variant="filled"
+      />
+      <TextField id="filled-basic" label="Description" variant="filled" />
+      <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-filled-label"
+          id="demo-simple-select-filled"
+          // value={"Category"}
         >
-          Learn React
-        </a>
-      </header>
+          <MenuItem value={10}>Breakfast</MenuItem>
+          <MenuItem value={20}>Lunch</MenuItem>
+          <MenuItem value={30}>Dinner</MenuItem>
+          <MenuItem value={30}>Other</MenuItem>
+        </Select>
+      </FormControl>
     </div>
   );
 }
