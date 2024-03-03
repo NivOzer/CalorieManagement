@@ -6,9 +6,16 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
+
 function App() {
   return (
     <div className="App">
+      <IconButton aria-label="delete" size="large">
+        <DeleteIcon fontSize="inherit" />
+      </IconButton>
       <TextField id="filled-basic" label="Item" variant="filled" />
       <TextField
         id="filled-basic"
@@ -29,6 +36,9 @@ function App() {
           <MenuItem value={30}>Other</MenuItem>
         </Select>
       </FormControl>
+      <Button variant="contained" color="primary">
+        Submit
+      </Button>
     </div>
   );
 }
