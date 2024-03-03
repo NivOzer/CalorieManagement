@@ -24,10 +24,23 @@ function App() {
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
+  const handleReset = () => {
+    setNumOfCalories("");
+    setDescription("");
+    setCategory("");
+  };
+  const handleSubmit = () => {
+    const item = {
+      numOfCalories: numOfCalories,
+      description: description,
+      category: category,
+    };
+    console.log(item);
+  };
 
   return (
     <div className="App">
-      <IconButton aria-label="delete" size="large">
+      <IconButton aria-label="delete" size="large" onClick={handleReset}>
         <DeleteIcon fontSize="inherit" />
       </IconButton>
       <TextField
@@ -52,16 +65,20 @@ function App() {
           value={category}
           onChange={handleCategoryChange}
         >
-          <MenuItem value={10}>Breakfast</MenuItem>
-          <MenuItem value={20}>Lunch</MenuItem>
-          <MenuItem value={30}>Dinner</MenuItem>
-          <MenuItem value={30}>Other</MenuItem>
+          <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
+          <MenuItem value={"Lunch"}>Lunch</MenuItem>
+          <MenuItem value={"Dinner"}>Dinner</MenuItem>
+          <MenuItem value={"Other"}>Other</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
-      <h1>{description}</h1>
+      <h1>
+        {numOfCalories && `${numOfCalories}, `}
+        {description && `${description}, `}
+        {category && category}
+      </h1>
     </div>
   );
 }
