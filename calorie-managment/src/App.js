@@ -19,7 +19,7 @@ function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(Date.now());
 
   const handlenumOfCaloriesChange = (e) => {
     const inputValue = e.target.value;
