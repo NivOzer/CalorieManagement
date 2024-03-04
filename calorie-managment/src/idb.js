@@ -36,6 +36,30 @@ const idb = {
       };
     });
   },
+
+  
+  getAllItems: (db) => {
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(['items'], 'readonly');
+      const store = transaction.objectStore('items');
+      const request = store.getAll();
+
+      request.onerror = (event) => {
+        reject("Failed to retrieve items");
+      };
+
+      request.onsuccess = (event) => {
+        resolve(request.result);
+      };
+    });
+
+  }
+
+
+
+
+
+
 };
 
 export default idb;
