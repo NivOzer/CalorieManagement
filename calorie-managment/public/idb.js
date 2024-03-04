@@ -9,7 +9,7 @@ const idb = {
 
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
-        const calorieStore = db.createObjectStore("calories", {
+        const calorieStore = db.createObjectStore("Items", {
           keyPath: "id",
           autoIncrement: true,
         });
@@ -21,10 +21,10 @@ const idb = {
       request.onsuccess = (event) => {
         const db = event.target.result;
         const dbObject = {
-          addCalories: (calorieData) => {
+          addCalories: (item) => {
             return new Promise((resolve, reject) => {
-              const transaction = db.transaction(["calories"], "readwrite");
-              const store = transaction.objectStore("calories");
+              const transaction = db.transaction(["Items"], "readwrite");
+              const store = transaction.objectStore("item");
               const addRequest = store.add(calorieData);
 
               addRequest.onerror = (event) => {
@@ -42,3 +42,5 @@ const idb = {
     });
   },
 };
+
+module.exports = { openCalorisDB, addCalories };
