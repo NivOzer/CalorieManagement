@@ -14,12 +14,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 import idb from "./idb.js";
-
+import Report from "./Report.js";
 function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(Date.now());
+  const [showReport, setShowReport] = useState(false);
 
   const handlenumOfCaloriesChange = (e) => {
     const inputValue = e.target.value;
@@ -51,6 +52,9 @@ function App() {
     setDescription("");
     setCategory("");
     setDate("");
+  };
+  const handleShowReport = () => {
+    setShowReport(!showReport);
   };
 
   let dbPromise = idb.openCalorisDB("caloriesdb", 1);
@@ -127,11 +131,16 @@ function App() {
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
+
+      <Button variant="contained" color="info" onClick={handleShowReport}>
+        Show Report
+      </Button>
       <h1>
         {numOfCalories && `${numOfCalories}, `}
         {description && `${description}, `}
         {category && category}
       </h1>
+      {showReport && <Report />}
     </div>
   );
 }
