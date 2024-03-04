@@ -60,7 +60,7 @@ function App() {
   let dbPromise = idb.openCalorisDB("caloriesdb", 1);
 
   const handleSubmit = () => {
-    if (!numOfCalories || !description || !category) {
+    if (!numOfCalories || !description || !category || !date) {
       alert("missing a feature");
       return;
     }
@@ -68,6 +68,7 @@ function App() {
       numOfCalories: numOfCalories,
       description: description,
       category: category,
+      date: date,
     };
 
     console.log(date);
@@ -138,7 +139,8 @@ function App() {
       <h1>
         {numOfCalories && `${numOfCalories}, `}
         {description && `${description}, `}
-        {category && category}
+        {category && `${category}, `}
+        {date && date}
       </h1>
       {showReport && <Report />}
     </div>
