@@ -42,7 +42,7 @@ function Report() {
     
     console.log(filteredItems);
 
-  }, []); // Empty dependency array ensures useEffect only runs once on component mount
+  }, []);
 
 
 
