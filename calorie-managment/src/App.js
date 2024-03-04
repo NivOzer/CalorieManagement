@@ -9,14 +9,13 @@ import Select from "@mui/material/Select";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-
-
+import idb from "./idb.js";
 
 function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  
+
   const handlenumOfCaloriesChange = (e) => {
     setNumOfCalories(e.target.value);
   };
@@ -31,28 +30,26 @@ function App() {
     setDescription("");
     setCategory("");
   };
+
+  let dbPromise = idb.openCalorisDB("caloriesdb", 1);
+
   const handleSubmit = () => {
     const item = {
       numOfCalories: numOfCalories,
       description: description,
       category: category,
     };
-    console.log(item);
+    dbPromise.then((db) => {
+      idb
+        .addCalories(db, item)
+        .then((message) => {
+          console.log(message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   };
-//   async function test() {
-//     const db = await idb.openCalorisDB("caloriesdb",1);
-//     const result1 = 
-//     await db.addCalories({calorie:200,category:"LUNCH",
-//     description:"glass of milk"});
-//     if(db) {
-//       console.log("creating db succeeded");
-//     }
-
-//     if(result1) {
-//       console.log("adding 1st cost succeeded");
-//     }
-//   }
-// test();
 
   return (
     <div className="App">
