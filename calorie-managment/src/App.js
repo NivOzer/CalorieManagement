@@ -140,7 +140,7 @@ function App() {
         {numOfCalories && `${numOfCalories}, `}
         {description && `${description}, `}
         {category && `${category}, `}
-        {date && date}
+        {/^[a-zA-Z]{3} \d{2} \d{4}$/.test(date) && date}
       </h1>
       {showReport && <Report />}
     </div>
