@@ -34,8 +34,8 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
+    
+      <!-- This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
       You can add webfonts, meta tags, or analytics to this file.
@@ -43,11 +43,11 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+     -->
     <script src="idb.js"></script>
     <script>
       async function test() {
-        const db = await openCalorisDB("caloriesdb",1);
+        const db = await idb.openCalorisDB("caloriesdb",1);
         const result1 = 
      await db.addCalories({calorie:200,category:"LUNCH",
        description:"glass of milk"});
@@ -65,7 +65,7 @@
           console.log("adding 2nd cost succeeded");
         }
       }
-      test()
+       test()
     </script>
   </body>
 </html>
