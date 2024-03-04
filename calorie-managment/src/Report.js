@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import App from "./App.js";
 import idb from "./idb.js";
 function Report() {
   const [filteredItems, setFilteredItems] = useState([]);
@@ -40,7 +41,7 @@ function Report() {
     // Call generateReport function
     generateReport(5, 2024);
     
-    console.log(filteredItems);
+    // console.log(filteredItems);
 
   }, []);
 

@@ -15,12 +15,38 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 import idb from "./idb.js";
 import Report from "./Report.js";
+
 function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(Date.now());
   const [showReport, setShowReport] = useState(false);
+
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+
+  const date1 = {
+    month: month,
+    year: year,
+  };
+  
+
+
+  const handleMonthChange = (e) => {
+    const inputValue = e.target.value;
+    if (!isNaN(inputValue)) {
+      setMonth(e.target.value);
+    }
+  };
+
+  const handleYearChange = (e) => {
+    const inputValue = e.target.value;
+    if (!isNaN(inputValue)) {
+      setYear(e.target.value);
+    }
+  };
+
 
   const handlenumOfCaloriesChange = (e) => {
     const inputValue = e.target.value;
@@ -53,9 +79,15 @@ function App() {
     setCategory("");
     setDate("");
   };
+
+
   const handleShowReport = () => {
+
+
     setShowReport(!showReport);
   };
+
+
 
   let dbPromise = idb.openCalorisDB("caloriesdb", 1);
 
@@ -132,6 +164,21 @@ function App() {
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
+      
+      <TextField
+        id="month"
+        label="Month"
+        variant="filled"
+        value={month}
+        onChange={handleMonthChange}
+      />
+      <TextField
+        id="year"
+        label="Year"
+        variant="filled"
+        value={year}
+        onChange={handleYearChange}
+      />
 
       <Button variant="contained" color="info" onClick={handleShowReport}>
         Show Report
