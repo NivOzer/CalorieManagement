@@ -8,8 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import App from "./App.js";
 import idb from "./idb.js";
-function Report() {
+function Report(props) {
   const [filteredItems, setFilteredItems] = useState([]);
+  const { month, year } = props;
 
   useEffect(() => {
     // Function to generate report
@@ -17,16 +18,16 @@ function Report() {
       try {
         // Open the IndexedDB database
         const db = await idb.openCalorisDB("caloriesdb", 1);
-    
+
         // Retrieve all items from IndexedDB
         const allItems = await idb.getAllItems(db);
-    
+
         // Filter items by month and year
-        const filteredItems = allItems.filter(item => {
+        const filteredItems = allItems.filter((item) => {
           const itemDate = new Date(item.date);
           const itemMonth = itemDate.getMonth() + 1; // Months are zero-based (0 = January), so add 1
           const itemYear = itemDate.getFullYear();
-        
+
           return itemMonth === month && itemYear === year;
         });
 
@@ -34,18 +35,15 @@ function Report() {
         await setFilteredItems(filteredItems);
         console.log(filteredItems);
       } catch (error) {
-        console.error('Error generating report:', error);
+        console.error("Error generating report:", error);
       }
     }
-    
+
     // Call generateReport function
-    generateReport(5, 2024);
-    
+    generateReport(month, year);
+
     // console.log(filteredItems);
-
   }, []);
-
-
 
   return (
     <TableContainer component={Paper}>

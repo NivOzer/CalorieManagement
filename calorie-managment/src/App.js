@@ -23,30 +23,22 @@ function App() {
   const [date, setDate] = useState(Date.now());
   const [showReport, setShowReport] = useState(false);
 
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
-
-  const date1 = {
-    month: month,
-    year: year,
-  };
-  
-
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
 
   const handleMonthChange = (e) => {
     const inputValue = e.target.value;
-    if (!isNaN(inputValue)) {
+    if (!isNaN(inputValue) && inputValue > 0 && inputValue < 13) {
       setMonth(e.target.value);
     }
   };
 
   const handleYearChange = (e) => {
     const inputValue = e.target.value;
-    if (!isNaN(inputValue)) {
+    if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 2099) {
       setYear(e.target.value);
     }
   };
-
 
   const handlenumOfCaloriesChange = (e) => {
     const inputValue = e.target.value;
@@ -80,14 +72,9 @@ function App() {
     setDate("");
   };
 
-
   const handleShowReport = () => {
-
-
     setShowReport(!showReport);
   };
-
-
 
   let dbPromise = idb.openCalorisDB("caloriesdb", 1);
 
@@ -164,7 +151,7 @@ function App() {
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
-      
+
       <TextField
         id="month"
         label="Month"
@@ -189,7 +176,7 @@ function App() {
         {category && `${category}, `}
         {/^[a-zA-Z]{3} \d{2} \d{4}$/.test(date) && date}
       </h1>
-      {showReport && <Report />}
+      {showReport && <Report month={+month} year={+year} />}
     </div>
   );
 }
