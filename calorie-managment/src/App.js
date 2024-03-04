@@ -10,11 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 
+
+
 function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-
+  
   const handlenumOfCaloriesChange = (e) => {
     setNumOfCalories(e.target.value);
   };
@@ -37,6 +39,20 @@ function App() {
     };
     console.log(item);
   };
+//   async function test() {
+//     const db = await idb.openCalorisDB("caloriesdb",1);
+//     const result1 = 
+//     await db.addCalories({calorie:200,category:"LUNCH",
+//     description:"glass of milk"});
+//     if(db) {
+//       console.log("creating db succeeded");
+//     }
+
+//     if(result1) {
+//       console.log("adding 1st cost succeeded");
+//     }
+//   }
+// test();
 
   return (
     <div className="App">
