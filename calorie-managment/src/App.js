@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { React } from "react";
+import { React, useState } from "react";
 import { TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,34 +11,74 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 
 function App() {
+  const [numOfCalories, setNumOfCalories] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+
+  const handlenumOfCaloriesChange = (e) => {
+    setNumOfCalories(e.target.value);
+  };
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+  const handleReset = () => {
+    setNumOfCalories("");
+    setDescription("");
+    setCategory("");
+  };
+  const handleSubmit = () => {
+    const item = {
+      numOfCalories: numOfCalories,
+      description: description,
+      category: category,
+    };
+    console.log(item);
+  };
+
   return (
     <div className="App">
-      <IconButton aria-label="delete" size="large">
+      <IconButton aria-label="delete" size="large" onClick={handleReset}>
         <DeleteIcon fontSize="inherit" />
       </IconButton>
-      <TextField id="filled-basic" label="Item" variant="filled" />
       <TextField
         id="filled-basic"
         label="Number of Calories"
         variant="filled"
+        value={numOfCalories}
+        onChange={handlenumOfCaloriesChange}
       />
-      <TextField id="filled-basic" label="Description" variant="filled" />
+      <TextField
+        id="filled-basic"
+        label="Description"
+        variant="filled"
+        value={description}
+        onChange={handleDescriptionChange}
+      />
       <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
-          // value={"Category"}
+          value={category}
+          onChange={handleCategoryChange}
         >
-          <MenuItem value={10}>Breakfast</MenuItem>
-          <MenuItem value={20}>Lunch</MenuItem>
-          <MenuItem value={30}>Dinner</MenuItem>
-          <MenuItem value={30}>Other</MenuItem>
+          <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
+          <MenuItem value={"Lunch"}>Lunch</MenuItem>
+          <MenuItem value={"Dinner"}>Dinner</MenuItem>
+          <MenuItem value={"Other"}>Other</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
+      <h1>
+        {numOfCalories && `${numOfCalories}, `}
+        {description && `${description}, `}
+        {category && category}
+      </h1>
     </div>
   );
 }
