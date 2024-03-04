@@ -124,96 +124,99 @@ function App() {
 
   return (
     <div className="App">
-      <div className="submit-bar">
-        <IconButton aria-label="delete" size="large" onClick={handleReset}>
-          <DeleteIcon fontSize="inherit" />
-        </IconButton>
-        <TextField
-          id="filled-basic"
-          label="Number of Calories"
-          variant="filled"
-          value={numOfCalories}
-          onChange={handlenumOfCaloriesChange}
-        />
-        <TextField
-          id="filled-basic"
-          label="Description"
-          variant="filled"
-          value={description}
-          onChange={handleDescriptionChange}
-        />
-        <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
-          <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
-            value={category}
-            onChange={handleCategoryChange}
-          >
-            <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
-            <MenuItem value={"Lunch"}>Lunch</MenuItem>
-            <MenuItem value={"Dinner"}>Dinner</MenuItem>
-            <MenuItem value={"Other"}>Other</MenuItem>
-          </Select>
-        </FormControl>
+      <div className="tool-bars">
+        <div className="submit-bar">
+          <IconButton aria-label="delete" size="large" onClick={handleReset}>
+            <DeleteIcon fontSize="inherit" />
+          </IconButton>
+          <TextField
+            id="filled-basic"
+            label="Number of Calories"
+            variant="filled"
+            value={numOfCalories}
+            onChange={handlenumOfCaloriesChange}
+          />
+          <TextField
+            id="filled-basic"
+            label="Description"
+            variant="filled"
+            value={description}
+            onChange={handleDescriptionChange}
+          />
+          <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-filled-label">
+              Category
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={category}
+              onChange={handleCategoryChange}
+            >
+              <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
+              <MenuItem value={"Lunch"}>Lunch</MenuItem>
+              <MenuItem value={"Dinner"}>Dinner</MenuItem>
+              <MenuItem value={"Other"}>Other</MenuItem>
+            </Select>
+          </FormControl>
 
-        <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-filled-label">Date</InputLabel>
-          <Select>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar date={date} onChange={handleDateChange} />
-            </LocalizationProvider>
-          </Select>
-        </FormControl>
+          <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-filled-label">Date</InputLabel>
+            <Select>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar date={date} onChange={handleDateChange} />
+              </LocalizationProvider>
+            </Select>
+          </FormControl>
 
-        <ThemeProvider theme={theme}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={handleSubmit}
-            sx={{ minWidth: 120, minHeight: 56 }}
+          <ThemeProvider theme={theme}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleSubmit}
+              sx={{ minWidth: 142, minHeight: 56 }}
+            >
+              Submit
+            </Button>
+          </ThemeProvider>
+        </div>
+
+        <div className="report-bar">
+          <IconButton
+            aria-label="delete"
+            size="large"
+            onClick={handleResetReport}
           >
-            Submit
-          </Button>
-        </ThemeProvider>
+            <DeleteIcon fontSize="inherit" />
+          </IconButton>
+
+          <TextField
+            id="month"
+            label="Month"
+            variant="filled"
+            value={month}
+            onChange={handleMonthChange}
+          />
+          <TextField
+            id="year"
+            label="Year"
+            variant="filled"
+            value={year}
+            onChange={handleYearChange}
+          />
+
+          <ThemeProvider theme={theme}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleShowReport}
+              sx={{ minWidth: 120, minHeight: 56 }}
+            >
+              Show Report
+            </Button>
+          </ThemeProvider>
+        </div>
       </div>
-
-      <div className="report-bar">
-        <IconButton
-          aria-label="delete"
-          size="large"
-          onClick={handleResetReport}
-        >
-          <DeleteIcon fontSize="inherit" />
-        </IconButton>
-
-        <TextField
-          id="month"
-          label="Month"
-          variant="filled"
-          value={month}
-          onChange={handleMonthChange}
-        />
-        <TextField
-          id="year"
-          label="Year"
-          variant="filled"
-          value={year}
-          onChange={handleYearChange}
-        />
-
-        <ThemeProvider theme={theme}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={handleShowReport}
-            sx={{ minWidth: 120, minHeight: 56 }}
-          >
-            Show Report
-          </Button>
-        </ThemeProvider>
-      </div>
-
       <h1>
         {numOfCalories && `${numOfCalories}, `}
         {description && `${description}, `}
