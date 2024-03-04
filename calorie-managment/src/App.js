@@ -13,6 +13,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import idb from "./idb.js";
 import Report from "./Report.js";
 
@@ -20,7 +21,7 @@ function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState(Date.now());
+  const [date, setDate] = useState();
   const [showReport, setShowReport] = useState(false);
 
   const [month, setMonth] = useState("");
@@ -46,12 +47,15 @@ function App() {
       setNumOfCalories(e.target.value);
     }
   };
+
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
+
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
+
   const handleDateChange = (e) => {
     const stringDate = e.toString();
     // Extract day, month, and year
@@ -72,11 +76,14 @@ function App() {
     setDate("");
   };
 
+  const handleResetReport = () => {
+    setMonth("");
+    setYear("");
+  };
+
   const handleShowReport = () => {
     setShowReport(!showReport);
   };
-
-  let dbPromise = idb.openCalorisDB("caloriesdb", 1);
 
   const handleSubmit = () => {
     if (!numOfCalories || !description || !category || !date) {
@@ -105,71 +112,108 @@ function App() {
     });
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#424242",
+      },
+    },
+  });
+
+  let dbPromise = idb.openCalorisDB("caloriesdb", 1);
+
   return (
     <div className="App">
-      <IconButton aria-label="delete" size="large" onClick={handleReset}>
-        <DeleteIcon fontSize="inherit" />
-      </IconButton>
-      <TextField
-        id="filled-basic"
-        label="Number of Calories"
-        variant="filled"
-        value={numOfCalories}
-        onChange={handlenumOfCaloriesChange}
-      />
-      <TextField
-        id="filled-basic"
-        label="Description"
-        variant="filled"
-        value={description}
-        onChange={handleDescriptionChange}
-      />
-      <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
-        <Select
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
-          value={category}
-          onChange={handleCategoryChange}
+      <div className="submit-bar">
+        <IconButton aria-label="delete" size="large" onClick={handleReset}>
+          <DeleteIcon fontSize="inherit" />
+        </IconButton>
+        <TextField
+          id="filled-basic"
+          label="Number of Calories"
+          variant="filled"
+          value={numOfCalories}
+          onChange={handlenumOfCaloriesChange}
+        />
+        <TextField
+          id="filled-basic"
+          label="Description"
+          variant="filled"
+          value={description}
+          onChange={handleDescriptionChange}
+        />
+        <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
+            <MenuItem value={"Lunch"}>Lunch</MenuItem>
+            <MenuItem value={"Dinner"}>Dinner</MenuItem>
+            <MenuItem value={"Other"}>Other</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-filled-label">Date</InputLabel>
+          <Select>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateCalendar date={date} onChange={handleDateChange} />
+            </LocalizationProvider>
+          </Select>
+        </FormControl>
+
+        <ThemeProvider theme={theme}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleSubmit}
+            sx={{ minWidth: 120, minHeight: 56 }}
+          >
+            Submit
+          </Button>
+        </ThemeProvider>
+      </div>
+
+      <div className="report-bar">
+        <IconButton
+          aria-label="delete"
+          size="large"
+          onClick={handleResetReport}
         >
-          <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
-          <MenuItem value={"Lunch"}>Lunch</MenuItem>
-          <MenuItem value={"Dinner"}>Dinner</MenuItem>
-          <MenuItem value={"Other"}>Other</MenuItem>
-        </Select>
-      </FormControl>
+          <DeleteIcon fontSize="inherit" />
+        </IconButton>
 
-      <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-filled-label">Date</InputLabel>
-        <Select>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar date={date} onChange={handleDateChange} />
-          </LocalizationProvider>
-        </Select>
-      </FormControl>
+        <TextField
+          id="month"
+          label="Month"
+          variant="filled"
+          value={month}
+          onChange={handleMonthChange}
+        />
+        <TextField
+          id="year"
+          label="Year"
+          variant="filled"
+          value={year}
+          onChange={handleYearChange}
+        />
 
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Submit
-      </Button>
+        <ThemeProvider theme={theme}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleShowReport}
+            sx={{ minWidth: 120, minHeight: 56 }}
+          >
+            Show Report
+          </Button>
+        </ThemeProvider>
+      </div>
 
-      <TextField
-        id="month"
-        label="Month"
-        variant="filled"
-        value={month}
-        onChange={handleMonthChange}
-      />
-      <TextField
-        id="year"
-        label="Year"
-        variant="filled"
-        value={year}
-        onChange={handleYearChange}
-      />
-
-      <Button variant="contained" color="info" onClick={handleShowReport}>
-        Show Report
-      </Button>
       <h1>
         {numOfCalories && `${numOfCalories}, `}
         {description && `${description}, `}
