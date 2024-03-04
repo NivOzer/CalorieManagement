@@ -17,7 +17,10 @@ function App() {
   const [category, setCategory] = useState("");
 
   const handlenumOfCaloriesChange = (e) => {
-    setNumOfCalories(e.target.value);
+    const inputValue = e.target.value;
+    if (!isNaN(inputValue)) {
+      setNumOfCalories(e.target.value);
+    }
   };
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -34,16 +37,22 @@ function App() {
   let dbPromise = idb.openCalorisDB("caloriesdb", 1);
 
   const handleSubmit = () => {
+    if (!numOfCalories || !description || !category) {
+      alert("missing a feature");
+      return;
+    }
     const item = {
       numOfCalories: numOfCalories,
       description: description,
       category: category,
     };
+
     dbPromise.then((db) => {
       idb
         .addCalories(db, item)
         .then((message) => {
           console.log(message);
+          handleReset();
         })
         .catch((error) => {
           console.error(error);
