@@ -83,12 +83,25 @@ function App() {
   };
 
   const handleResetReport = () => {
+    if (!month && !year) {
+      return;
+    }
     setMonth("");
     setYear("");
     handleSnack("info", "Cleared all reporting fields");
   };
 
   const handleShowReport = () => {
+    if (!month || !year) {
+      if (showReport) {
+        setShowReport(!showReport);
+        if (!month || !year) {
+          return;
+        }
+      }
+      handleSnack("error", "Missing a feature");
+      return;
+    }
     setShowReport(!showReport);
   };
 
