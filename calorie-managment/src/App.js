@@ -14,6 +14,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import idb from "./idb.js";
 import Report from "./Report.js";
 
@@ -23,6 +25,9 @@ function App() {
   const [category, setCategory] = useState("");
   const [date, setDate] = useState();
   const [showReport, setShowReport] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
@@ -74,20 +79,28 @@ function App() {
     setDescription("");
     setCategory("");
     setDate("");
+    handleSnack("info", "Cleared all submitting fields");
   };
 
   const handleResetReport = () => {
     setMonth("");
     setYear("");
+    handleSnack("info", "Cleared all reporting fields");
   };
 
   const handleShowReport = () => {
     setShowReport(!showReport);
   };
 
+  const handleSnack = (severity, message) => {
+    setSnackbarSeverity(severity);
+    setSnackbarMessage(message);
+    setOpenSnack(true);
+  };
+
   const handleSubmit = () => {
     if (!numOfCalories || !description || !category || !date) {
-      alert("missing a feature");
+      handleSnack("error", "Missing a feature");
       return;
     }
     const item = {
@@ -104,8 +117,9 @@ function App() {
         .addCalories(db, item)
         .then((message) => {
           console.log(message);
-          handleReset();
+          handleSnack("success", "Submitted Successfully", true);
         })
+        .then(handleReset())
         .catch((error) => {
           console.error(error);
         });
@@ -180,6 +194,21 @@ function App() {
             </Button>
           </ThemeProvider>
         </div>
+
+        <Snackbar
+          className="Submit-Alerts"
+          open={openSnack}
+          autoHideDuration={3000} // 3 seconds
+          onClose={() => setOpenSnack(false)}
+        >
+          <Alert
+            severity={snackbarSeverity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
 
         <div className="report-bar">
           <IconButton
