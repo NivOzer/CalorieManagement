@@ -17,3 +17,9 @@ code {
   flex-direction: column;
   /* align-items: baseline; */
 }
+
+.Report{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
