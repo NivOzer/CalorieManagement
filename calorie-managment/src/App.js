@@ -76,6 +76,9 @@ function App() {
   };
 
   const handleReset = () => {
+    if (!numOfCalories && !description && !category && !date) {
+      return;
+    }
     setNumOfCalories("");
     setDescription("");
     setCategory("");
