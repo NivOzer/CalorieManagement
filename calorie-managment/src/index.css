@@ -11,7 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.App{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .tool-bars{
   display: flex;
   flex-direction: column;
@@ -22,4 +26,9 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.report-bar{
+display: flex;
+justify-content: center;
 }

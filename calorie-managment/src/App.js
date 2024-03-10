@@ -225,39 +225,43 @@ function App() {
         </Snackbar>
 
         <div className="report-bar">
-          <IconButton
-            aria-label="delete"
-            size="large"
-            onClick={handleResetReport}
-          >
-            <DeleteIcon fontSize="inherit" />
-          </IconButton>
-
-          <TextField
-            id="month"
-            label="Month"
-            variant="filled"
-            value={month}
-            onChange={handleMonthChange}
-          />
-          <TextField
-            id="year"
-            label="Year"
-            variant="filled"
-            value={year}
-            onChange={handleYearChange}
-          />
-
-          <ThemeProvider theme={theme}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={handleShowReport}
-              sx={{ minWidth: 120, minHeight: 56 }}
+          <div className="report-bar-left">
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={handleResetReport}
             >
-              Show Report
-            </Button>
-          </ThemeProvider>
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+
+            <TextField
+              id="month"
+              label="Month"
+              variant="filled"
+              value={month}
+              onChange={handleMonthChange}
+            />
+            <TextField
+              id="year"
+              label="Year"
+              variant="filled"
+              value={year}
+              onChange={handleYearChange}
+              sx={{ minWidth: 459 }}
+            />
+          </div>
+          <div className="report-bar-right">
+            <ThemeProvider theme={theme}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleShowReport}
+                sx={{ minWidth: 120, minHeight: 56 }}
+              >
+                Show Report
+              </Button>
+            </ThemeProvider>
+          </div>
         </div>
       </div>
       <h1>
