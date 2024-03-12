@@ -34,7 +34,12 @@ function App() {
 
   const handleMonthChange = (e) => {
     const inputValue = e.target.value;
-    if (!isNaN(inputValue) && inputValue > 0 && inputValue < 13) {
+    console.log(e);
+    if (e.nativeEvent.data === null) {
+      if (month >= 10) {
+        setMonth(parseInt(month / 10)); // Remove the last character
+      } else setMonth("");
+    } else if (!isNaN(inputValue) && inputValue > 0 && inputValue < 13) {
       setMonth(e.target.value);
     }
   };
