@@ -19,6 +19,12 @@ import Alert from "@mui/material/Alert";
 import idb from "./idb.js";
 import Report from "./Report.js";
 
+//TODO: Commenting
+//TODO: PDF
+//TODO: Video
+//TODO: Test Version
+//TODO: Delete Chen
+
 function App() {
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
