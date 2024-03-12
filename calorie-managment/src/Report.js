@@ -11,9 +11,10 @@ import Box from "@mui/material/Box";
 import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
 import App from "./App.js";
 import idb from "./idb.js";
+import { StayPrimaryLandscape } from "@mui/icons-material";
 function Report(props) {
   const [filteredItems, setFilteredItems] = useState([]);
-  const { month, year } = props;
+  const { month, year, handleSubmit } = props;
 
   useEffect(() => {
     // Function to generate report
@@ -46,7 +47,7 @@ function Report(props) {
     generateReport(month, year);
 
     // console.log(filteredItems);
-  }, []);
+  }, [handleSubmit]);
 
   function calculateWeeklySum(filteredItems) {
     const weekSum = [0, 0, 0, 0];
@@ -124,6 +125,7 @@ function Report(props) {
             height={100}
             showTooltip
             showHighlight
+            curve="monotoneY"
           />
         </Box>
         <Box sx={{ flexGrow: 0, width: "34.2%" }}>

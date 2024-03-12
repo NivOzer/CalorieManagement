@@ -128,9 +128,8 @@ function App() {
         .then((message) => {
           console.log(message);
           handleSnack("success", "Submitted Successfully", true);
-          setShowReport(true);
         })
-        .then(handleReset())
+        .then(() => handleReset())
         .catch((error) => {
           console.error(error);
         });
@@ -267,7 +266,9 @@ function App() {
         {category && `${category}, `}
         {/^[a-zA-Z]{3} \d{2} \d{4}$/.test(date) && date}
       </h1>
-      {showReport && <Report month={+month} year={+year} />}
+      {showReport && (
+        <Report month={+month} year={+year} handleSubmit={handleSubmit} />
+      )}
     </div>
   );
 }
