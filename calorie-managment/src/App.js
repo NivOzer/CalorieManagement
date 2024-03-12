@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { React, useState } from "react";
 import { TextField } from "@mui/material";
@@ -62,17 +61,11 @@ function App() {
     setCategory(e.target.value);
   };
 
-  const handleDateChange = (e) => {
-    const stringDate = e.toString();
-    // Extract day, month, and year
-    const dateParts = stringDate.split(" ");
-    const day = dateParts[2];
-    const month = dateParts[1];
-    const year = dateParts[3];
-    // Construct the formatted date
-    const formattedDate = `${day} ${month} ${year}`;
+  const handleDateChange = (newDate) => {
+    // Convert the newDate value to a formatted date string
+    const formattedDate = dayjs(newDate).format("MMM DD YYYY");
+    // Update the date state
     setDate(formattedDate);
-    console.log(formattedDate);
   };
 
   const handleReset = () => {
@@ -135,6 +128,7 @@ function App() {
         .then((message) => {
           console.log(message);
           handleSnack("success", "Submitted Successfully", true);
+          setShowReport(true);
         })
         .then(handleReset())
         .catch((error) => {

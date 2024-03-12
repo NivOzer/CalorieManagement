@@ -48,6 +48,20 @@ function Report(props) {
     // console.log(filteredItems);
   }, []);
 
+  function calculateWeeklySum(filteredItems) {
+    const weekSum = [0, 0, 0, 0];
+
+    filteredItems.forEach(({ date, numOfCalories }) => {
+      const dayOfMonth = new Date(date).getDate();
+      const weekIndex = Math.floor((dayOfMonth - 1) / 7);
+      weekSum[weekIndex] += +numOfCalories;
+    });
+
+    return weekSum;
+  }
+
+  const weekSum = calculateWeeklySum(filteredItems, month, year);
+
   return (
     <div className="Report">
       <TableContainer component={Paper}>
@@ -108,19 +122,13 @@ function Report(props) {
         <Box sx={{ flexGrow: 0, width: "34.2%" }}>
           <SparkLineChart
             plotType="bar"
-            data={[1, 4, 2, 5]}
+            data={[weekSum[0], weekSum[1], weekSum[2], weekSum[3]]}
             height={100}
             showTooltip
             showHighlight
             xAxis={{
               scaleType: "band",
-              data: [
-                new Date(2016, 0, 1),
-                new Date(2017, 0, 1),
-                new Date(2018, 0, 1),
-                new Date(2019, 0, 1),
-              ],
-              valueFormatter: (value) => value.getFullYear(),
+              data: ["Week 1", "Week 2", "Week 3", "Week 4"],
             }}
           />
         </Box>
