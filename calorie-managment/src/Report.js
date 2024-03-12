@@ -103,16 +103,23 @@ function Report(props) {
       >
         <Box sx={{ flexGrow: 0, width: "34.2%" }}>
           <SparkLineChart
-            data={[1, 4, 2, 5]}
+            data={[weekSum[0], weekSum[1], weekSum[2], weekSum[3]]}
             xAxis={{
-              scaleType: "time",
-              data: [
-                new Date(2022, 5, 1),
-                new Date(2022, 5, 2),
-                new Date(2022, 5, 5),
-                new Date(2022, 5, 6),
-              ],
-              valueFormatter: (value) => value.toISOString().slice(0, 10),
+              scaleType: "band",
+              data: ["Week 1", "Week 2", "Week 3", "Week 4"],
+            }}
+            height={100}
+            showTooltip
+            showHighlight
+            area
+          />
+        </Box>
+        <Box sx={{ flexGrow: 0, width: "34.2%" }}>
+          <SparkLineChart
+            data={[weekSum[0], weekSum[1], weekSum[2], weekSum[3]]}
+            xAxis={{
+              scaleType: "band",
+              data: ["Week 1", "Week 2", "Week 3", "Week 4"],
             }}
             height={100}
             showTooltip
