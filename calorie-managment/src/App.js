@@ -26,8 +26,6 @@ import Report from "./Report.js";
 
 //TODO: Commenting
 //TODO: PDF
-//TODO: Video
-//TODO: Test Version
 
 function App() {
   //Using React states for dynamically changing the form and inputs
