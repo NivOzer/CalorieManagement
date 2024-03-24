@@ -23,21 +23,26 @@ import Report from "./Report.js";
 //TODO: PDF
 //TODO: Video
 //TODO: Test Version
-//TODO: Delete Chen
 
 function App() {
+  //Using React states for dynamically changing the form and inputs
   const [numOfCalories, setNumOfCalories] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState();
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+
+  //A button to show / unshow the calorie report
   const [showReport, setShowReport] = useState(false);
+
+  //Using snack/Toast for a more friendly user interaction
   const [openSnack, setOpenSnack] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-
+  //Accorindg to the buttons event listeners being clicked apply the according handleFunctions described below:
+  //While month has change , change its value in month state
   const handleMonthChange = (e) => {
     const inputValue = e.target.value;
     console.log(e);
@@ -49,36 +54,36 @@ function App() {
       setMonth(e.target.value);
     }
   };
-
+  //While year has change , change its value in year state
   const handleYearChange = (e) => {
     const inputValue = e.target.value;
     if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 2099) {
       setYear(e.target.value);
     }
   };
-
+  //While the numberOfCalories section has change , change its value in numberOfCalories state
   const handlenumOfCaloriesChange = (e) => {
     const inputValue = e.target.value;
     if (!isNaN(inputValue)) {
       setNumOfCalories(e.target.value);
     }
   };
-
+  //While the description section has change , change its value in the description state
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
-
+  //While the Category section has been chosen from the list of given options , change its value in category state
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
-
+  //While the date has change , change its value in date state
   const handleDateChange = (newDate) => {
     // Convert the newDate value to a formatted date string
     const formattedDate = dayjs(newDate).format("MMM DD YYYY");
     // Update the date state
     setDate(formattedDate);
   };
-
+  //While the reset button for the submit a food section has been clicked , reset all the fields in the submit section
   const handleReset = () => {
     if (!numOfCalories && !description && !category && !date) {
       return;
@@ -89,7 +94,7 @@ function App() {
     setDate("");
     handleSnack("info", "Cleared all submitting fields");
   };
-
+  //While the reset button for the Report section has been clicked , reset all the fields in the Report(show) section
   const handleResetReport = () => {
     if (!month && !year) {
       return;
@@ -98,7 +103,7 @@ function App() {
     setYear("");
     handleSnack("info", "Cleared all reporting fields");
   };
-
+  //when the show report button has been clicked , toggle the show report state to show the report
   const handleShowReport = () => {
     if (!month || !year) {
       if (showReport) {
@@ -112,13 +117,13 @@ function App() {
     }
     setShowReport(!showReport);
   };
-
+  //if a snack/toast has been invoked , check its severity and message oto display it in the correct way
   const handleSnack = (severity, message) => {
     setSnackbarSeverity(severity);
     setSnackbarMessage(message);
     setOpenSnack(true);
   };
-
+  //when the handle submit button has been clicked , collect all the input data from the submit section and as an item , add it to the Calorie management database
   const handleSubmit = () => {
     if (!numOfCalories || !description || !category || !date) {
       handleSnack("error", "Missing a feature");
@@ -146,7 +151,7 @@ function App() {
         });
     });
   };
-
+  //Extra coloring and customization for Material UI.js library
   const theme = createTheme({
     palette: {
       primary: {
@@ -154,9 +159,10 @@ function App() {
       },
     },
   });
-
+  //Opens  an IndexDB data base named caloriesdb on you local machine (tested on chrome browser)
   let dbPromise = idb.openCalorisDB("caloriesdb", 1);
 
+  //Returns HTML elements as a component and conditionally renders the Report component based on the shoowReport state (activated when clicked)
   return (
     <div className="App">
       <div className="tool-bars">
