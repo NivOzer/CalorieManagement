@@ -9,9 +9,9 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
-import App from "./App.js";
+
 import idb from "./idb.js";
-import { StayPrimaryLandscape } from "@mui/icons-material";
+
 function Report(props) {
   const [filteredItems, setFilteredItems] = useState([]);
   const { month, year, handleSubmit } = props;
