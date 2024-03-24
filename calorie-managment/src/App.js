@@ -1,5 +1,10 @@
+//Niv Ozer :208993329
+//Valeria Shafran :320954258
+//Chen Skanderany :206508541
 import "./App.css";
+//React essentials imports
 import { React, useState } from "react";
+//Import Material UI Javascript library
 import { TextField } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,11 +16,11 @@ import Button from "@mui/material/Button";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import dayjs from "dayjs";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
+import dayjs from "dayjs";
+//Components
 import idb from "./idb.js";
 import Report from "./Report.js";
 
@@ -99,6 +104,7 @@ function App() {
     if (!month && !year) {
       return;
     }
+    setShowReport(!showReport);
     setMonth("");
     setYear("");
     handleSnack("info", "Cleared all reporting fields");
@@ -165,11 +171,15 @@ function App() {
   //Returns HTML elements as a component and conditionally renders the Report component based on the shoowReport state (activated when clicked)
   return (
     <div className="App">
+      {/*Addd two tool-bars for User inserting data: Submit and Report*/}
       <div className="tool-bars">
+        {/*Submit bar containing a reset button ,description field number of the food items calories field, a category and a date change*/}
         <div className="submit-bar">
+          {/*Reset button with icon*/}
           <IconButton aria-label="delete" size="large" onClick={handleReset}>
             <DeleteIcon fontSize="inherit" />
           </IconButton>
+          {/*number of calories input field*/}
           <TextField
             id="filled-basic"
             label="Number of Calories"
@@ -177,6 +187,7 @@ function App() {
             value={numOfCalories}
             onChange={handlenumOfCaloriesChange}
           />
+          {/*food's description input field*/}
           <TextField
             id="filled-basic"
             label="Description"
@@ -184,6 +195,7 @@ function App() {
             value={description}
             onChange={handleDescriptionChange}
           />
+          {/*Category option picker*/}
           <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-filled-label">
               Category
@@ -200,7 +212,7 @@ function App() {
               <MenuItem value={"Other"}>Other</MenuItem>
             </Select>
           </FormControl>
-
+          {/*calender date picker*/}
           <FormControl variant="filled" sx={{ m: 0, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-filled-label">Date</InputLabel>
             <Select>
@@ -209,7 +221,7 @@ function App() {
               </LocalizationProvider>
             </Select>
           </FormControl>
-
+          {/*Submit food into data base button*/}
           <ThemeProvider theme={theme}>
             <Button
               variant="outlined"
@@ -220,6 +232,52 @@ function App() {
               Submit
             </Button>
           </ThemeProvider>
+        </div>
+
+        {/*Report bar Detailed report component with graphs and the display of a table containing all the foods with analytics */}
+        <div className="report-bar">
+          {/*A styling preference to make the report bar be the same with and oriented like the submit bar for a more beutiful UI*/}
+          <div className="report-bar-left">
+            {/*Reset button with icon*/}
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={handleResetReport}
+            >
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+            {/*month input field*/}
+            <TextField
+              id="month"
+              label="Month"
+              variant="filled"
+              value={month}
+              onChange={handleMonthChange}
+            />
+            {/*year input field*/}
+            <TextField
+              id="year"
+              label="Year"
+              variant="filled"
+              value={year}
+              onChange={handleYearChange}
+              sx={{ minWidth: 459 }}
+            />
+          </div>
+          {/*the show report button will be on the right*/}
+          <div className="report-bar-right">
+            {/*Show Report button*/}
+            <ThemeProvider theme={theme}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleShowReport}
+                sx={{ minWidth: 120, minHeight: 56 }}
+              >
+                Show Report
+              </Button>
+            </ThemeProvider>
+          </div>
         </div>
 
         <Snackbar
@@ -236,46 +294,6 @@ function App() {
             {snackbarMessage}
           </Alert>
         </Snackbar>
-
-        <div className="report-bar">
-          <div className="report-bar-left">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={handleResetReport}
-            >
-              <DeleteIcon fontSize="inherit" />
-            </IconButton>
-
-            <TextField
-              id="month"
-              label="Month"
-              variant="filled"
-              value={month}
-              onChange={handleMonthChange}
-            />
-            <TextField
-              id="year"
-              label="Year"
-              variant="filled"
-              value={year}
-              onChange={handleYearChange}
-              sx={{ minWidth: 459 }}
-            />
-          </div>
-          <div className="report-bar-right">
-            <ThemeProvider theme={theme}>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handleShowReport}
-                sx={{ minWidth: 120, minHeight: 56 }}
-              >
-                Show Report
-              </Button>
-            </ThemeProvider>
-          </div>
-        </div>
       </div>
       <h1>
         {description && `${description}, `}
