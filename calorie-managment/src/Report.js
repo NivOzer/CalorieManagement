@@ -1,4 +1,6 @@
+//React essentials imports
 import { React, useState, useEffect } from "react";
+//Import Material UI Javascript library
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,14 +10,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+//import sparkLineChart with material UI for graph presenting
 import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
-
+//idb.js is the js library for handling the indexDB database
 import idb from "./idb.js";
-
+//initialize Report component
 function Report(props) {
   const [filteredItems, setFilteredItems] = useState([]);
   const { month, year, handleSubmit } = props;
-
+  //use effect for rendering everytime handleSubmit has changed for dynamic experience
   useEffect(() => {
     // Function to generate report
     async function generateReport(month, year) {
@@ -45,10 +48,9 @@ function Report(props) {
 
     // Call generateReport function
     generateReport(month, year);
-
-    // console.log(filteredItems);
   }, [handleSubmit]);
 
+  //calculates the sum of calories for every week in the specific month to show weekly progress
   function calculateWeeklySum(filteredItems) {
     const weekSum = [0, 0, 0, 0];
 
@@ -65,10 +67,12 @@ function Report(props) {
 
   return (
     <div className="Report">
+      {/**generates the tableContainer */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
+              {/**Report columns would be Id,Description,Number of Calories,DAte */}
               <TableCell align="left">Id</TableCell>
               <TableCell align="left">Description</TableCell>
               <TableCell align="left">Number of Calories</TableCell>
@@ -77,6 +81,7 @@ function Report(props) {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/**Assigning values to table cells */}
             {filteredItems.map((item) => (
               <TableRow
                 key={item.id}
@@ -94,7 +99,7 @@ function Report(props) {
           </TableBody>
         </Table>
       </TableContainer>
-
+      {/**Visualize graphs 3 types */}
       <Stack
         className="graphs"
         justifyContent="center"
@@ -102,6 +107,7 @@ function Report(props) {
         spacing={5}
         sx={{ width: "100%" }}
       >
+        {/**graph with area */}
         <Box sx={{ flexGrow: 0, width: "34.2%" }}>
           <SparkLineChart
             data={[weekSum[0], weekSum[1], weekSum[2], weekSum[3]]}
@@ -115,6 +121,7 @@ function Report(props) {
             area
           />
         </Box>
+        {/**graph without area */}
         <Box sx={{ flexGrow: 0, width: "34.2%" }}>
           <SparkLineChart
             data={[weekSum[0], weekSum[1], weekSum[2], weekSum[3]]}
@@ -128,6 +135,7 @@ function Report(props) {
             curve="monotoneY"
           />
         </Box>
+        {/**bar plot */}
         <Box sx={{ flexGrow: 0, width: "34.2%" }}>
           <SparkLineChart
             plotType="bar"
