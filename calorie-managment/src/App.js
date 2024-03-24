@@ -104,7 +104,9 @@ function App() {
     if (!month && !year) {
       return;
     }
-    setShowReport(!showReport);
+    if (month && year && showReport == true) {
+      setShowReport(!showReport);
+    }
     setMonth("");
     setYear("");
     handleSnack("info", "Cleared all reporting fields");
@@ -149,9 +151,9 @@ function App() {
         .addCalories(db, item)
         .then((message) => {
           console.log(message);
-          handleSnack("success", "Submitted Successfully", true);
+          handleReset();
         })
-        .then(() => handleReset())
+        .then(() => handleSnack("success", "Submitted Successfully", true))
         .catch((error) => {
           console.error(error);
         });
@@ -234,6 +236,21 @@ function App() {
           </ThemeProvider>
         </div>
 
+        <Snackbar
+          className="Submit-Alerts"
+          open={openSnack}
+          autoHideDuration={3000} // 3 seconds
+          onClose={() => setOpenSnack(false)}
+        >
+          <Alert
+            severity={snackbarSeverity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
+
         {/*Report bar Detailed report component with graphs and the display of a table containing all the foods with analytics */}
         <div className="report-bar">
           {/*A styling preference to make the report bar be the same with and oriented like the submit bar for a more beutiful UI*/}
@@ -279,21 +296,6 @@ function App() {
             </ThemeProvider>
           </div>
         </div>
-
-        <Snackbar
-          className="Submit-Alerts"
-          open={openSnack}
-          autoHideDuration={3000} // 3 seconds
-          onClose={() => setOpenSnack(false)}
-        >
-          <Alert
-            severity={snackbarSeverity}
-            variant="filled"
-            sx={{ width: "100%" }}
-          >
-            {snackbarMessage}
-          </Alert>
-        </Snackbar>
       </div>
       <h1>
         {description && `${description}, `}
