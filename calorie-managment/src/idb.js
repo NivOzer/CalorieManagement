@@ -1,3 +1,6 @@
+//Niv Ozer :208993329
+//Valeria Shafran :320954258
+//Chen Skanderany :206508541
 const idb = {
   // Function to open the IndexedDB database
   openCalorisDB: (dbname, dbversion) => {

@@ -1,3 +1,7 @@
+//Niv Ozer :208993329
+//Valeria Shafran :320954258
+//Chen Skanderany :206508541
+
 //React essentials imports
 import { React, useState, useEffect } from "react";
 //Import Material UI Javascript library
