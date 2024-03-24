@@ -272,8 +272,8 @@ function App() {
         </div>
       </div>
       <h1>
-        {numOfCalories && `${numOfCalories}, `}
         {description && `${description}, `}
+        {numOfCalories && `${numOfCalories}, `}
         {category && `${category}, `}
         {/^[a-zA-Z]{3} \d{2} \d{4}$/.test(date) && date}
       </h1>
