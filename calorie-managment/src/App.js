@@ -55,13 +55,16 @@ function App() {
       if (month >= 10) {
         setMonth(parseInt(month / 10)); // Remove the last character
       } else setMonth("");
-    } else if (!isNaN(inputValue) && inputValue > 0 && inputValue < 13) {
+    }
+    //checks month validation
+    else if (!isNaN(inputValue) && inputValue > 0 && inputValue < 13) {
       setMonth(e.target.value);
     }
   };
   //While year has change , change its value in year state
   const handleYearChange = (e) => {
     const inputValue = e.target.value;
+    //checks year validation
     if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 2099) {
       setYear(e.target.value);
     }
@@ -69,10 +72,12 @@ function App() {
   //While the numberOfCalories section has change , change its value in numberOfCalories state
   const handlenumOfCaloriesChange = (e) => {
     const inputValue = e.target.value;
+    //checks number validation
     if (!isNaN(inputValue)) {
       setNumOfCalories(e.target.value);
     }
   };
+
   //While the description section has change , change its value in the description state
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -90,6 +95,7 @@ function App() {
   };
   //While the reset button for the submit a food section has been clicked , reset all the fields in the submit section
   const handleReset = () => {
+    //if all fields are empty do nothing
     if (!numOfCalories && !description && !category && !date) {
       return;
     }
@@ -101,10 +107,12 @@ function App() {
   };
   //While the reset button for the Report section has been clicked , reset all the fields in the Report(show) section
   const handleResetReport = () => {
+    //if all fields are empty do nothing
     if (!month && !year) {
       return;
     }
-    if (month && year && showReport == true) {
+    //check condition so if reset button has been clicked close the report
+    if ((month || year) && showReport == true) {
       setShowReport(!showReport);
     }
     setMonth("");
@@ -113,6 +121,7 @@ function App() {
   };
   //when the show report button has been clicked , toggle the show report state to show the report
   const handleShowReport = () => {
+    //check that all input fields has been filled
     if (!month || !year) {
       if (showReport) {
         setShowReport(!showReport);
@@ -127,25 +136,26 @@ function App() {
   };
   //if a snack/toast has been invoked , check its severity and message oto display it in the correct way
   const handleSnack = (severity, message) => {
+    //color + messege and show the toast
     setSnackbarSeverity(severity);
     setSnackbarMessage(message);
     setOpenSnack(true);
   };
   //when the handle submit button has been clicked , collect all the input data from the submit section and as an item , add it to the Calorie management database
   const handleSubmit = () => {
+    //checks for missing a feature and displays a snack for it accordingly
     if (!numOfCalories || !description || !category || !date) {
       handleSnack("error", "Missing a feature");
       return;
     }
+    //creates item to submit into db
     const item = {
       numOfCalories: numOfCalories,
       description: description,
       category: category,
       date: date,
     };
-
-    console.log(date);
-
+    //Adds item to db in an async way via promises in js can also throw error or result
     dbPromise.then((db) => {
       idb
         .addCalories(db, item)
@@ -236,6 +246,7 @@ function App() {
           </ThemeProvider>
         </div>
 
+        {/**Display off pop up snack/toasts */}
         <Snackbar
           className="Submit-Alerts"
           open={openSnack}
@@ -297,12 +308,14 @@ function App() {
           </div>
         </div>
       </div>
+      {/**Display of the current user input as text */}
       <h1>
         {description && `${description}, `}
         {numOfCalories && `${numOfCalories}, `}
         {category && `${category}, `}
         {/^[a-zA-Z]{3} \d{2} \d{4}$/.test(date) && date}
       </h1>
+      {/**show report button with conditional rendering  */}
       {showReport && (
         <Report month={+month} year={+year} handleSubmit={handleSubmit} />
       )}
