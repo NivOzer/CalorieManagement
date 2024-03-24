@@ -24,7 +24,6 @@ import dayjs from "dayjs";
 import idb from "./idb.js";
 import Report from "./Report.js";
 
-//TODO: Commenting
 //TODO: PDF
 
 function App() {
